@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Blogs - APT Insurance Surveyors & Loss Assessors</title>
+    <link rel="stylesheet" href="/blogs_styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <h1>APT<span>.</span></h1>
+          <p>Insurance Surveyors & Loss Assessors Pvt. Ltd.</p>
+        </div>
+        <div class="nav-menu" id="nav-menu">
+          <a href="/#home" class="nav-link">Home</a>
+          <a href="/#about" class="nav-link">About</a>
+          <a href="/#services" class="nav-link">Services</a>
+          <a href="/#blogs" class="nav-link">Blogs</a>
+          <a href="/#testimonials" class="nav-link">Testimonials</a>
+          <a href="/#contact" class="nav-link">Contact</a>
+          <a href="https://wa.me/919827161038" class="nav-link whatsapp-btn" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+            WhatsApp
+          </a>
+        </div>
+        <div class="nav-toggle" id="nav-toggle">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Blogs Page -->
+    <section class="blogs-page">
+      <div class="container">
+        <button class="back-to-home" onclick="window.location.href='/'">← Back to Home</button>
+        <div class="section-header">
+          <h2>All <span>Blogs</span></h2>
+          <p>Explore our complete collection of industry insights and expert opinions</p>
+        </div>
+        <div class="blogs-grid" id="all-blogs-container">
+          <!-- All blogs will be loaded here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-background">
+        <div class="constellation-pattern"></div>
+      </div>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <h1>APT<span>.</span></h1>
+            <h3>Insurance Surveyors and Loss Assessors Pvt. Ltd.</h3>
+            <p>
+              Expert Insurance Surveyors specializing in Fire, Motor,
+              Engineering and Marine claims. Delivering thorough investigations
+              and precise assessments to streamline claims processes.
+            </p>
+            <button class="cta-button primary" onclick="window.location.href='/#contact'">
+              <span>Contact Us</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+          <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="/#home">Home</a></li>
+              <li><a href="/#about">About</a></li>
+              <li><a href="/#services">Services</a></li>
+              <li><a href="/#blogs">Blogs</a></li>
+              <li><a href="/#contact">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-services">
+            <h4>Services</h4>
+            <ul>
+              <li><a href="/#services">Fire Insurance</a></li>
+              <li><a href="/#services">Motor Claims</a></li>
+              <li><a href="/#services">Engineering</a></li>
+              <li><a href="/#services">Marine Claims</a></li>
+              <li><a href="/#services">Miscellaneous</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 APT Insurance Surveyors. All rights reserved</p>
+          <div class="footer-bottom-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Cookie Policy</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Load all blogs for this page
+      async function loadAllBlogs() {
+        try {
+          const response = await fetch("/api/blogs");
+          const blogs = await response.json();
+          const container = document.getElementById("all-blogs-container");
+          
+          container.innerHTML = blogs
+            .map(
+              (blog) => `
+                <div class="blog-card" onclick="window.location.href='/blog/${blog.id}'">
+                  <img src="${
+                    blog.image ||
+                    "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=250&fit=crop&auto=format"
+                  }" alt="${blog.title}">
+                  <div class="blog-content">
+                    <h3>${blog.title}</h3>
+                    <p>${blog.description}</p>
+                    <p class="blog-publisher">Published by: Tech Team APT</p>
+                  </div>
+                </div>
+              `
+            )
+            .join("");
+        } catch (error) {
+          console.error("Error loading blogs:", error);
+          // Load default blogs if API fails
+          loadDefaultBlogs();
+        }
+      }
+
+      function loadDefaultBlogs() {
+        const container = document.getElementById("all-blogs-container");
+        container.innerHTML = `
+          <div class="blog-card" onclick="window.location.href='/blog/1'">
+            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=250&fit=crop&auto=format" alt="Understanding Fire Insurance Claims">
+            <div class="blog-content">
+              <h3>Understanding Fire Insurance Claims</h3>
+              <p>A comprehensive guide to fire insurance claim processes and what to expect during assessment...</p>
+              <p class="blog-publisher">Published by: Tech Team APT</p>
+            </div>
+          </div>
+          <div class="blog-card" onclick="window.location.href='/blog/2'">
+            <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=400&h=250&fit=crop&auto=format" alt="Motor Insurance Best Practices">
+            <div class="blog-content">
+              <h3>Motor Insurance: Best Practices</h3>
+              <p>Essential tips for motor insurance claims and how proper documentation can speed up the process...</p>
+              <p class="blog-publisher">Published by: Tech Team APT</p>
+            </div>
+          </div>
+          <div class="blog-card" onclick="window.location.href='/blog/3'">
+            <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=250&fit=crop&auto=format" alt="Health Insurance Coverage">
+            <div class="blog-content">
+              <h3>Health Insurance Coverage Explained</h3>
+              <p>Navigate the complexities of health insurance policies and maximize your coverage benefits...</p>
+              <p class="blog-publisher">Published by: Tech Team APT</p>
+            </div>
+          </div>
+        `;
+      }
+
+      // Navigation functionality
+      const navToggle = document.getElementById("nav-toggle");
+      const navMenu = document.getElementById("nav-menu");
+
+      navToggle.addEventListener("click", () => {
+        navMenu.classList.toggle("active");
+      });
+
+      // Close mobile menu when clicking on a link
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        link.addEventListener("click", () => {
+          navMenu.classList.remove("active");
+        });
+      });
+
+      // Load blogs when page loads
+      document.addEventListener("DOMContentLoaded", loadAllBlogs);
+    </script>
+  </body>
+</html>
